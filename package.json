@@ -10,6 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "hono": "^4.11.4",
     "react": "^18.3.1",
     "react-dom": "^18.3.1"
   },
@@ -25,5 +26,18 @@
     "typescript": "^5.5.3",
     "typescript-eslint": "^8.0.1",
     "vite": "^5.4.1"
-  }
+  },
+  "description": "This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.",
+  "main": "eslint.config.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Limecozy1945/customer-support-system.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Limecozy1945/customer-support-system/issues"
+  },
+  "homepage": "https://github.com/Limecozy1945/customer-support-system#readme"
 }
