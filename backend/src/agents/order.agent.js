@@ -2,6 +2,8 @@ import { orderTool } from '../tools/order.tool.js'
 
 export const orderAgent = {
   async handle({ userId }) {
+    console.log('ORDER AGENT userId:', userId)
+
     const order = orderTool.getLatestOrderByUser(userId)
 
     if (!order) {
