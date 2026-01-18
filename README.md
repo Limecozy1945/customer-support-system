@@ -39,16 +39,16 @@ The project focuses on backend architecture and multi-agent routing, with a mini
 * Falls back to Support Agent if intent is unclear
 
 
-  **Support Agent**
+**Support Agent**
 * Handles general support queries and FAQs
 
 
- **Order Agent**
+**Order Agent**
 * Handles order status and tracking queries
 * Uses database tools to fetch order data
 
 
-  **Billing Agent**
+**Billing Agent**
 * Handles billing, invoice, and refund queries
 * Uses database tools to fetch billing data
 
