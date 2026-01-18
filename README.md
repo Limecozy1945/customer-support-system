@@ -1,21 +1,59 @@
-# React + TypeScript + Vite
+AI-Powered Customer Support System
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Overview
+This project is an AI-powered customer support backend system designed using a multi-agent architecture. It demonstrates clean backend design, agent-based routing, and AI-assisted responses with streaming support. The system was developed as part of an Applied AI / Backend Engineering assessment and focuses on correctness, extensibility, and production-oriented practices.
+The application supports multiple types of customer queries, including general support, order-related questions, and billing inquiries. Requests are analyzed and routed to specialized agents responsible for handling each domain.
 
-While this project uses React, Vite supports many popular JS frameworks. [See all the supported frameworks](https://vitejs.dev/guide/#scaffolding-your-first-vite-project).
+Key Features
+Multi-agent system with a central Router Agent
+Domain-specific agents for support, orders, and billing
+Controller–Service architecture with clean separation of concerns
+Conversation context and history management
+Streaming-capable AI responses using Vercel AI SDK (v6)
+Secure API key handling using environment variables
+RESTful API design
+Centralized error handling middleware
 
-## Deploy Your Own
+Architecture
+The system follows a layered architecture:
+Client
+  ↓
+API Controller
+  ↓
+Chat Service
+  ↓
+Router Agent
+  ├── Support Agent (AI streaming)
+  ├── Order Agent (order tools)
+  └── Billing Agent (billing tools)
 
-Deploy your own Vite project with Vercel.
+The Router Agent is responsible for intent classification and delegation. Each domain agent handles only its own responsibility and may use either deterministic tools or AI-based responses.
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/vercel/examples/tree/main/framework-boilerplates/vite-react&template=vite-react)
+API Endpoints
+Chat APIs
+POST /api/chat/messages
+Send a new chat message
 
-_Live Example: https://vite-react-example.vercel.app_
+GET /api/chat/conversations
+List all conversations
 
-### Deploying From Your Terminal
+GET /api/chat/conversations/:id
+Retrieve a specific conversation
 
-You can deploy your new Vite project with a single command from your terminal using [Vercel CLI](https://vercel.com/download):
+DELETE /api/chat/conversations/:id
+Delete a conversation
 
-```shell
-$ vercel
-```
+Agent APIs
+GET /api/agents
+List available agents
+
+GET /api/agents/:type/capabilities
+Retrieve capabilities of a specific agent
+
+Health Check
+GET /api/health
+
+Environment Configuration
+Create a .env file inside the backend directory:
+OPENAI_API_KEY=your_openai_api_key_here
+The .env file is excluded from version control via .gitignore.
