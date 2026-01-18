@@ -1,5 +1,4 @@
 import { chatService } from '../services/chat.service.js'
-import { streamToResponse } from 'ai'
 
 export const sendMessage = async (c) => {
   const body = await c.req.json()
@@ -10,8 +9,9 @@ export const sendMessage = async (c) => {
     userId: body.userId || 'user1'
   })
 
+
   if (result.stream) {
-    return streamToResponse(result.stream, c)
+    return result.stream.toDataStreamResponse()
   }
 
   return c.json(result)
