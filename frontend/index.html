@@ -3,10 +3,28 @@
   <head>
     <meta charset="UTF-8" />
     <title>Customer Support Chat</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/src/style.css" />
   </head>
   <body>
-    <div id="app"></div>
-    <script type="module" src="/src/main.js"></script>
+    <div class="chat-container">
+      <header class="chat-header">
+        Customer Support
+      </header>
+
+      <div id="chat" class="chat-messages"></div>
+
+      <div id="typing" class="typing hidden">Agent is typing...</div>
+
+      <div class="chat-input">
+        <input
+          id="messageInput"
+          type="text"
+          placeholder="Type your message..."
+        />
+        <button id="sendBtn">Send</button>
+      </div>
+    </div>
+
+    <script src="/src/main.js"></script>
   </body>
 </html>
