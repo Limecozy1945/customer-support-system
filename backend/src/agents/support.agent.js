@@ -1,27 +1,21 @@
 import { streamText } from 'ai'
-import OpenAI from 'openai'
+import { openai } from '@ai-sdk/openai'
 
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY
-})
+console.log('OPENAI KEY LOADED:', process.env.OPENAI_API_KEY?.slice(0, 10))
 
 export const supportAgent = {
   async handle({ context, message }) {
-    const stream = await streamText({
-      model: openai.chat.completions,
+    const result = await streamText({
+      model: openai('gpt-4o-mini'),
       messages: [
-        {
-          role: 'system',
-          content: 'You are a helpful customer support assistant.'
-        },
+        { role: 'system', content: 'You are a helpful customer support assistant.' },
         ...context,
-        {
-          role: 'user',
-          content: message
-        }
+        { role: 'user', content: message }
       ]
     })
 
-    return { stream }
+    return {
+      stream: result.textStream
+    }
   }
 }

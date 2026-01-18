@@ -1,34 +1,54 @@
-const conversations = {}
+import { prisma } from '../db/prisma.js'
 
 export const conversationTool = {
-  getContext(conversationId) {
-    return conversations[conversationId]?.messages || []
+  async getContext(conversationId) {
+    const messages = await prisma.message.findMany({
+      where: { conversationId },
+      orderBy: { createdAt: 'asc' }
+    })
+
+    return messages.map(m => ({
+      role: m.role,
+      content: m.content
+    }))
   },
 
-  saveMessage(conversationId, role, content) {
-    if (!conversations[conversationId]) {
-      conversations[conversationId] = {
-        id: conversationId,
-        messages: []
-      }
-    }
+  async saveMessage(conversationId, role, content) {
+    await prisma.conversation.upsert({
+      where: { id: conversationId },
+      update: {},
+      create: { id: conversationId }
+    })
 
-    conversations[conversationId].messages.push({
-      role,
-      content,
-      timestamp: new Date().toISOString()
+    await prisma.message.create({
+      data: {
+        conversationId,
+        role,
+        content
+      }
     })
   },
 
-  getConversation(conversationId) {
-    return conversations[conversationId] || null
+  async getConversation(conversationId) {
+    return prisma.conversation.findUnique({
+      where: { id: conversationId },
+      include: { messages: true }
+    })
   },
 
-  getAllConversations() {
-    return Object.values(conversations)
+  async getAllConversations() {
+    return prisma.conversation.findMany({
+      include: { messages: true }
+    })
   },
 
-  deleteConversation(conversationId) {
-    delete conversations[conversationId]
+  async deleteConversation(conversationId) {
+    await prisma.message.deleteMany({
+      where: { conversationId }
+    })
+
+    await prisma.conversation.delete({
+      where: { id: conversationId }
+    })
   }
 }

@@ -1,10 +1,11 @@
-import { routerAgent } from '../agents/router.agent.js'
 import { conversationTool } from '../tools/conversation.tool.js'
+import { routerAgent } from '../agents/router.agent.js'
 
 export const chatService = {
   async processMessage({ message, conversationId, userId }) {
-    const context = conversationTool.getContext(conversationId)
-    conversationTool.saveMessage(conversationId, 'user', message)
+    await conversationTool.saveMessage(conversationId, 'user', message)
+
+    const context = await conversationTool.getContext(conversationId)
 
     const response = await routerAgent.route({
       message,
@@ -16,7 +17,7 @@ export const chatService = {
       return { conversationId, stream: response.stream }
     }
 
-    conversationTool.saveMessage(conversationId, 'agent', response.reply)
+    await conversationTool.saveMessage(conversationId, 'agent', response.reply)
 
     return {
       conversationId,

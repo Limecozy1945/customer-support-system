@@ -2,8 +2,12 @@ export const errorMiddleware = async (c, next) => {
   try {
     await next()
   } catch (err) {
+    console.error('ERROR STACK:', err)
     return c.json(
-      { error: err.message || 'Internal Server Error' },
+      {
+        error: 'Internal Server Error',
+        message: err.message
+      },
       500
     )
   }

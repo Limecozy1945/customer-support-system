@@ -1,24 +1,28 @@
 import { Hono } from 'hono'
 import { serve } from '@hono/node-server'
 import chatRoutes from './routes/chat.js'
-import {
-  listAgents,
-  getAgentCapabilities
-} from './controllers/agent.controller.js'
+import agentRoutes from './routes/agents.js'
 import { errorMiddleware } from './middleware/error.js'
 
 const app = new Hono()
 
-// ROUTES FIRST
+// Routes FIRST
 app.route('/api/chat', chatRoutes)
-
-app.get('/api/agents', listAgents)
-app.get('/api/agents/:type/capabilities', getAgentCapabilities)
+app.route('/api/agents', agentRoutes)
 
 app.get('/api/health', (c) => c.json({ status: 'ok' }))
 
-// ERROR MIDDLEWARE LAST
-app.use('*', errorMiddleware)
+// Error middleware LAST
+app.onError((err, c) => {
+  console.error('🔥 UNCAUGHT ERROR:', err)
+  return c.json(
+    {
+      error: 'Internal Server Error',
+      message: err.message
+    },
+    500
+  )
+})
 
 serve({
   fetch: app.fetch,
@@ -26,4 +30,3 @@ serve({
 })
 
 console.log('Backend running on http://localhost:3000')
-
