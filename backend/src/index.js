@@ -1,14 +1,24 @@
 import { Hono } from 'hono'
 import { serve } from '@hono/node-server'
 import chatRoutes from './routes/chat.js'
+import {
+  listAgents,
+  getAgentCapabilities
+} from './controllers/agent.controller.js'
 import { errorMiddleware } from './middleware/error.js'
 
 const app = new Hono()
 
-app.use('*', errorMiddleware)
+// ROUTES FIRST
 app.route('/api/chat', chatRoutes)
 
+app.get('/api/agents', listAgents)
+app.get('/api/agents/:type/capabilities', getAgentCapabilities)
+
 app.get('/api/health', (c) => c.json({ status: 'ok' }))
+
+// ERROR MIDDLEWARE LAST
+app.use('*', errorMiddleware)
 
 serve({
   fetch: app.fetch,
