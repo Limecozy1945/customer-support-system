@@ -1,12 +1,10 @@
 import { streamText } from 'ai'
-import { openai } from '@ai-sdk/openai'
-
-console.log('OPENAI KEY LOADED:', process.env.OPENAI_API_KEY?.slice(0, 10))
+import { groq } from '@ai-sdk/groq'
 
 export const supportAgent = {
   async handle({ context, message }) {
     const result = await streamText({
-      model: openai('gpt-4o-mini'),
+      model: groq('llama-3.1-8b-instant'),
       messages: [
         { role: 'system', content: 'You are a helpful customer support assistant.' },
         ...context,
@@ -14,8 +12,6 @@ export const supportAgent = {
       ]
     })
 
-    return {
-      stream: result.textStream
-    }
+    return { stream: result.textStream }
   }
 }
