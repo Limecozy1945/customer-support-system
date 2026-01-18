@@ -3,25 +3,32 @@
   <head>
     <meta charset="UTF-8" />
     <title>Customer Support Chat</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="/src/style.css" />
   </head>
+
   <body>
-    <div class="chat-container">
-      <header class="chat-header">
-        Customer Support
-      </header>
+    <div class="app">
+      <div class="chat-card">
+        <div class="chat-header">
+          <div class="title">Customer Support</div>
+          <div class="subtitle">We are here to help</div>
+        </div>
 
-      <div id="chat" class="chat-messages"></div>
+        <div id="chat" class="chat-body"></div>
 
-      <div id="typing" class="typing hidden">Agent is typing...</div>
+        <div id="typing" class="typing hidden">
+          <span></span><span></span><span></span>
+        </div>
 
-      <div class="chat-input">
-        <input
-          id="messageInput"
-          type="text"
-          placeholder="Type your message..."
-        />
-        <button id="sendBtn">Send</button>
+        <div class="chat-footer">
+          <input
+            id="messageInput"
+            type="text"
+            placeholder="Type your message..."
+          />
+          <button id="sendBtn">Send</button>
+        </div>
       </div>
     </div>
 
